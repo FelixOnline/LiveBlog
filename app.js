@@ -8,7 +8,7 @@ var express = require('express')
   , request = require('request')
   , config = require('./config') // config file
 
-var url = 'http://felixonline.local/varsity/blogdata.php';
+var url = 'http://felixonline.co.uk/varsity/blogdata.php';
 var cache;
 
 var app = module.exports = express.createServer();
