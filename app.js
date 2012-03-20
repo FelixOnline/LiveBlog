@@ -8,7 +8,8 @@ var express = require('express')
   , request = require('request')
   , config = require('./config') // config file
 
-var url = 'http://felixonline.co.uk/varsity/blogdata.php';
+//var url = 'http://felixonline.co.uk/varsity/blogdata.php';
+var url = 'http://felixonline.local/varsity/blogdata.php';
 var cache;
 
 var app = module.exports = express.createServer();
@@ -48,7 +49,22 @@ app.get('/newpost', function(req, res) {
     }
 });
 
+app.get('/matchupdate', function(req, res) {
+    console.log('match update');
+    if(config.api == req.param('api') && req.param('matchupdate')) {
+        console.log('Correct api');
+        getData(url, function(data) {
+            cache = data;
+            io.sockets.emit('matchupdate', { data: cache });
+        });
+        res.send('thanks!');
+    } else {
+        res.send('wrong api');
+    }
+});
+
 var io = socket.listen(app);
+io.set('log level', 1); // reduce logging
 
 io.sockets.on('connection', function(socket) {
     if(cache) {
