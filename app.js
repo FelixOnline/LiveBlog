@@ -50,12 +50,22 @@ app.get('/newpost', function(req, res) {
 });
 
 app.get('/matchupdate', function(req, res) {
-    console.log('match update');
     if(config.api == req.param('api')) {
-        console.log('Correct api');
         getData(url, function(data) {
             cache = data;
             io.sockets.emit('matchupdate', { data: cache });
+        });
+        res.send('thanks!');
+    } else {
+        res.send('wrong api');
+    }
+});
+
+app.get('/reset', function(req, res) {
+    if(config.api == req.param('api')) {
+        getData(url, function(data) {
+            cache = data;
+            io.sockets.emit('datastart', { data: cache });
         });
         res.send('thanks!');
     } else {
@@ -68,10 +78,8 @@ io.set('log level', 1); // reduce logging
 
 io.sockets.on('connection', function(socket) {
     if(cache) {
-        console.log('cache');
         socket.emit('datastart', { data: cache });
     } else {
-        console.log('not cache');
         getData(url, function(json) {
             cache = json;
             socket.emit('datastart', { data: cache });
