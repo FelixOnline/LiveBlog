@@ -37,7 +37,7 @@ app.configure('production', function(){
 //app.get('/', routes.index);
 
 app.get('/newpost', function(req, res) {
-    if(config.api == req.param('api') && req.param('new-post')) {
+    if(config.api == req.param('api')) {
         console.log('Correct api');
         getData(url, function(data) {
             cache = data;
@@ -51,7 +51,7 @@ app.get('/newpost', function(req, res) {
 
 app.get('/matchupdate', function(req, res) {
     console.log('match update');
-    if(config.api == req.param('api') && req.param('matchupdate')) {
+    if(config.api == req.param('api')) {
         console.log('Correct api');
         getData(url, function(data) {
             cache = data;
