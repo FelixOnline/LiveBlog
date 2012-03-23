@@ -8,8 +8,6 @@ var express = require('express')
   , request = require('request')
   , config = require('./config') // config file
 
-var url = 'http://felixonline.co.uk/varsity/blogdata.php';
-//var url = 'http://felixonline.local/varsity/blogdata.php';
 var cache;
 
 var app = module.exports = express.createServer();
@@ -39,7 +37,7 @@ app.configure('production', function(){
 app.get('/newpost', function(req, res) {
     if(config.api == req.param('api')) {
         console.log('Correct api');
-        getData(url, function(data) {
+        getData(config.url, function(data) {
             cache = data;
             io.sockets.emit('newpost', { data: cache });
         });
@@ -51,7 +49,7 @@ app.get('/newpost', function(req, res) {
 
 app.get('/matchupdate', function(req, res) {
     if(config.api == req.param('api')) {
-        getData(url, function(data) {
+        getData(config.url, function(data) {
             cache = data;
             io.sockets.emit('matchupdate', { data: cache });
         });
@@ -63,7 +61,7 @@ app.get('/matchupdate', function(req, res) {
 
 app.get('/reset', function(req, res) {
     if(config.api == req.param('api')) {
-        getData(url, function(data) {
+        getData(config.url, function(data) {
             cache = data;
             io.sockets.emit('datastart', { data: cache });
         });
@@ -80,7 +78,7 @@ io.sockets.on('connection', function(socket) {
     if(cache) {
         socket.emit('datastart', { data: cache });
     } else {
-        getData(url, function(json) {
+        getData(config.url, function(json) {
             cache = json;
             socket.emit('datastart', { data: cache });
         });
