@@ -36,7 +36,6 @@ app.configure('production', function(){
 
 app.get('/newpost', function(req, res) {
     if(config.api == req.param('api')) {
-        console.log('Correct api');
         getData(config.url, function(data) {
             cache = data;
             io.sockets.emit('newpost', { data: cache });
@@ -63,7 +62,7 @@ app.get('/reset', function(req, res) {
     if(config.api == req.param('api')) {
         getData(config.url, function(data) {
             cache = data;
-            io.sockets.emit('datastart', { data: cache });
+            io.sockets.emit('reset', { data: cache });
         });
         res.send('thanks!');
     } else {
