@@ -46,18 +46,6 @@ app.get('/newpost', function(req, res) {
     }
 });
 
-app.get('/matchupdate', function(req, res) {
-    if(config.api == req.param('api')) {
-        getData(config.url, function(data) {
-            cache = data;
-            io.sockets.emit('matchupdate', { data: cache });
-        });
-        res.send('thanks!');
-    } else {
-        res.send('wrong api');
-    }
-});
-
 app.get('/reset', function(req, res) {
     if(config.api == req.param('api')) {
         getData(config.url, function(data) {
