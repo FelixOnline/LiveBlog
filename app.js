@@ -46,6 +46,10 @@ app.get('/newpost', function(req, res) {
     }
 });
 
+app.get('/clientcount', function(req, res) {
+	res.send('Number of clients: '+io.engine.clientsCount);
+});
+
 app.get('/matchupdate', function(req, res) {
     if(config.api == req.param('api')) {
         getData(config.url, function(data) {
@@ -82,6 +86,12 @@ io.sockets.on('connection', function(socket) {
             socket.emit('datastart', { data: cache });
         });
     }
+
+    console.log("[C] Connected clients "+io.engine.clientsCount);
+});
+
+io.sockets.on('disconnect', function(socket) {
+    console.log("[D] Connected clients "+io.engine.clientsCount);
 });
 
 function getData(url, callback) {
