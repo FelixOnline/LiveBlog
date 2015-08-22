@@ -12,7 +12,7 @@ The endpoints are:
 
 * /newpost - Load the latest posts from the URL specified in the config and push them to the client
 * /clientcount - Show the number of connected clients (access this via your web browser)
-* /matchupdate - Tweaked version of newpost relevant to the Varsity live blog only
+* /matchupdate - Tweaked version of newpost relevant to the Varsity live blog only - tells client to update latest matches as well as new blog posts
 * /reset - Tell clients to clear all their data and load the latest information which the app loads from the config URL. This is relevant when a post is deleted
 
 All endpoints require the API key passing as a parameter.
@@ -24,3 +24,7 @@ When running, clints connecting and disconnecting will be shown.
 A PHP frontend is available here: https://github.com/FelixOnline/Varsity - this is for the varsity liveblog and makes use of the matchdata feature
 
 An admin interface for it is available here: https://github.com/FelixOnline/Varsity-Engine
+
+## TEDx branch
+
+Really old version for TEDxImperialCollege live blog - this is probably too old to be of use but does lack the matchupdate feature
